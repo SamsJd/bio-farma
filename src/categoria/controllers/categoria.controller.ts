@@ -1,12 +1,14 @@
 import { Categoria } from '../entities/categoria.entity';
 import { CategoriaService } from './../services/categoria.service';
 import {
+  Body,
   Controller,
   Get,
   HttpCode,
   HttpStatus,
   Param,
   ParseIntPipe,
+  Post,
 } from '@nestjs/common';
 
 @Controller('/categorias')
@@ -29,5 +31,11 @@ export class CategoriaController {
   @HttpCode(HttpStatus.OK)
   findByAllTitulo(@Param('titulo') titulo: string): Promise<Categoria[]> {
     return this.categoriaService.findAllByTitulo(titulo);
+  }
+
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  create(@Body() categoria: Categoria): Promise<Categoria> {
+    return this.categoriaService.create(categoria);
   }
 }
